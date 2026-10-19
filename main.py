@@ -1,0 +1,1 @@
+print ("willkommen beim Hotel Booking System")
