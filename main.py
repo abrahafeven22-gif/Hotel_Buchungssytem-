@@ -1,1 +1,12 @@
-print ("willkommen beim Hotel Booking System")
+print("1. Buchung erfassen")
+print("2. Zimmerverfügbarkeit prüfen")
+print("3. Gesamtpreis berechnen")
+print("4. Buchung ändern oder stornieren")
+print("5. Zusatzleistungen auswählen")
+print("6. Hotelstatistiken anzeigen")
+print("7. Check-in / Check-out")
+print("8. Buchungen suchen")
+print ("9. Programm beenden")
+auswahl = input("Bitte wähle eine Zahl von 1 bis 9: ")
+if auswahl == "1":
+    print("Du hast Buchung erfassen ausgewählt.")
