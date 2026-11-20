@@ -16,6 +16,12 @@ buchungen_liste = [
 
 def text_zu_datum(text):
     return datetime.strptime(text, "%d.%m.%Y").date()
+
+def zimmerart_von(zimmernummer):
+    for zimmer in zimmer_liste:
+        if zimmer["nummer"] == zimmernummer:
+            return zimmer["art"]
+    return None
    
 def zimmer_status_fuer_datum(datum):
     pass
@@ -46,8 +52,30 @@ def buchungsanzahl_und_wert(von, bis):
     print(f"Buchungswert CHF: {wert:.2f}")
 
 def meistgebuchte_zimmerart(von, bis):
-    pass
+    if not pruefe_zeitraum(von, bis):
+        return
+    von_datum = text_zu_datum(von)
+    bis_datum = text_zu_datum(bis)
+    zaehler = {}
+    for buchung in buchungen_liste:
+        check_in = text_zu_datum(buchung["check_in"])
+        if buchung["status"] != "storniert" and von_datum <= check_in <= bis_datum:
+            art = zimmerart_von(buchung["zimmer"])
+            if art in zaehler:
+                zaehler[art] += 1
+            else:
+                zaehler[art] = 1
+    if len(zaehler) == 0:
+        print("Meistgebuchte Zimmerart: keine Buchungen im Zeitraum")
+        return
+    hoechste_anzahl = max(zaehler.values())
+    meistgebuchte = []
+    for art in zaehler:
+        if zaehler[art] == hoechste_anzahl:
+            meistgebuchte.append(art)
+    print(f"Meistgebuchte Zimmerart: {', '.join(meistgebuchte)} (Anzahl Buchungen: {hoechste_anzahl})")
 
+            
 def hotel_statistiken():
     print("=== Hotelstatistiken ===")
     print("Test ganzer Oktober:")
@@ -64,7 +92,14 @@ def hotel_statistiken():
     print("Test ungültiger Zeitraum bei der Zählung")
     buchungsanzahl_und_wert("31.10.2026", "01.10.2026")
     buchungsanzahl_und_wert("31.02.2026", "10.03.2026")
-
+    print("Test zimmerart_von:")
+    print(zimmerart_von(100))
+    print(zimmerart_von(400))
+    print(zimmerart_von(999))
+    print("Test meistgebuchte_zimmerart:")
+    meistgebuchte_zimmerart("01.10.2026", "31.10.2026") 
+    meistgebuchte_zimmerart("01.10.2026", "11.10.2026") 
+    meistgebuchte_zimmerart("01.11.2026", "30.11.2026") 
 
     
 hotel_statistiken()
