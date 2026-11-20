@@ -20,7 +20,16 @@ def text_zu_datum(text):
 def zimmer_status_fuer_datum(datum):
     pass
 def pruefe_zeitraum(von, bis):
-    pass
+    try:
+        von_datum = text_zu_datum(von)
+        bis_datum = text_zu_datum(bis)
+    except ValueError:
+        print("Fehler: Ungültiges Datum. Bitte im Format TT.MM.JJJJ eingeben.")
+        return False
+    if bis_datum < von_datum:
+        print("Fehler: Das Bis-Datum liegt vor dem Von-Datum.")
+        return False
+    return True
 def buchungsanzahl_und_wert(von, bis):
     von_datum = text_zu_datum(von)
     bis_datum = text_zu_datum(bis)
@@ -47,3 +56,8 @@ def hotel_statistiken():
     buchungsanzahl_und_wert("01.11.2026", "30.11.2026")
   
 hotel_statistiken()
+print("Test pruefe_zeitraum:")
+print (pruefe_zeitraum("01.10.2026", "31.10.2026"))
+print (pruefe_zeitraum("31.10.2026", "01.10.2026"))
+print (pruefe_zeitraum("31.02.2026", "10.03.2026"))
+print (pruefe_zeitraum("hallo", "31.10.2026"))
