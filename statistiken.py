@@ -27,7 +27,8 @@ def buchungsanzahl_und_wert(von, bis):
     anzahl = 0
     wert = 0.00
     for buchung in buchungen_liste:
-        if buchung["status"] != "storniert":
+        check_in = text_zu_datum(buchung["check_in"])
+        if buchung["status"] != "storniert" and von_datum <= check_in <= bis_datum:
             anzahl += 1
             wert += buchung["gesamtpreis"]
     print(f"Anzahl aktiver Buchungen: {anzahl}")
@@ -38,9 +39,11 @@ def meistgebuchte_zimmerart(von, bis):
 
 def hotel_statistiken():
     print("=== Hotelstatistiken ===")
+    print("Test ganzer Oktober:")
     buchungsanzahl_und_wert("01.10.2026", "31.10.2026")
-    print(text_zu_datum("10.10.2026"))
-    print(text_zu_datum("12.10.2026") < text_zu_datum("31.10.2026"))
-
+    print("Test 01.10. bis 11.10.:")
+    buchungsanzahl_und_wert("01.10.2026", "11.10.2026")
+    print("Test ganzer November:")
+    buchungsanzahl_und_wert("01.11.2026", "30.11.2026")
   
 hotel_statistiken()
