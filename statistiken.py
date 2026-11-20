@@ -31,6 +31,8 @@ def pruefe_zeitraum(von, bis):
         return False
     return True
 def buchungsanzahl_und_wert(von, bis):
+    if not pruefe_zeitraum(von, bis):
+        return
     von_datum = text_zu_datum(von)
     bis_datum = text_zu_datum(bis)
     anzahl = 0
@@ -54,10 +56,15 @@ def hotel_statistiken():
     buchungsanzahl_und_wert("01.10.2026", "11.10.2026")
     print("Test ganzer November:")
     buchungsanzahl_und_wert("01.11.2026", "30.11.2026")
-  
+    print("Test pruefe_zeitraum:")
+    print(pruefe_zeitraum("01.10.2026", "31.10.2026"))
+    print(pruefe_zeitraum("31.10.2026", "01.10.2026"))
+    print(pruefe_zeitraum("31.02.2026", "10.03.2026"))
+    print(pruefe_zeitraum("hallo", "31.10.2026"))
+    print("Test ungültiger Zeitraum bei der Zählung")
+    buchungsanzahl_und_wert("31.10.2026", "01.10.2026")
+    buchungsanzahl_und_wert("31.02.2026", "10.03.2026")
+
+
+    
 hotel_statistiken()
-print("Test pruefe_zeitraum:")
-print (pruefe_zeitraum("01.10.2026", "31.10.2026"))
-print (pruefe_zeitraum("31.10.2026", "01.10.2026"))
-print (pruefe_zeitraum("31.02.2026", "10.03.2026"))
-print (pruefe_zeitraum("hallo", "31.10.2026"))
