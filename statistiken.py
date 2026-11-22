@@ -1,11 +1,19 @@
 from datetime import datetime
 
-zimmer_liste = [
-    {"nummer": 100, "art": "Einzelzimmer", "preis": 100.00},
-    {"nummer": 200, "art": "Doppelzimmer", "preis": 150.00},
-    {"nummer": 300, "art": "Doppelzimmer", "preis": 150.00},
-    {"nummer": 400, "art": "Familienzimmer", "preis": 220.00},
-]
+zimmer_liste = []
+
+for nummer in range(100, 116):
+    zimmer_liste.append({"nummer": nummer, "art": "Einzelzimmer", "betten": "1 Einzelbett", "max_gaeste": 1, "preis":100.00})
+
+for nummer in range(200, 211):
+    zimmer_liste.append({"nummer": nummer, "art": "Doppelzimmer", "betten": "1 Doppelbett", "max_gaeste": 2, "preis":150.00})
+
+for nummer in range(300, 311):
+    zimmer_liste.append({"nummer": nummer, "art": "Doppelzimmer", "betten": "2 Einzelbetten", "max_gaeste": 2, "preis":150.00})   
+
+for nummer in range(400, 411):
+    zimmer_liste.append({"nummer": nummer, "art": "Familienzimmer", "betten": "1 Doppelbett + 2 Einzelbetten", "max_gaeste": 4, "preis":220.00})
+
 
 buchungen_liste = [
     {"nummer": "B0001", "nachname": "Müller", "zimmer": 100, "check_in": "10.10.2026", "check_out": "13.10.2026", "status": "abgeschlossen", "gesamtpreis": 311.40},
@@ -112,40 +120,6 @@ def meistgebuchte_zimmerart(von, bis):
             meistgebuchte.append(art)
     print(f"Meistgebuchte Zimmerart: {', '.join(meistgebuchte)} (Anzahl Buchungen: {hoechste_anzahl})")
 
-            
-def tests_ausfuehren():
-    print("=== Hotelstatistiken ===")
-    print("Test ganzer Oktober:")
-    buchungsanzahl_und_wert("01.10.2026", "31.10.2026")
-    print("Test 01.10. bis 11.10.:")
-    buchungsanzahl_und_wert("01.10.2026", "11.10.2026")
-    print("Test ganzer November:")
-    buchungsanzahl_und_wert("01.11.2026", "30.11.2026")
-    print("Test pruefe_zeitraum:")
-    print(pruefe_zeitraum("01.10.2026", "31.10.2026"))
-    print(pruefe_zeitraum("31.10.2026", "01.10.2026"))
-    print(pruefe_zeitraum("31.02.2026", "10.03.2026"))
-    print(pruefe_zeitraum("hallo", "31.10.2026"))
-    print("Test ungültiger Zeitraum bei der Zählung")
-    buchungsanzahl_und_wert("31.10.2026", "01.10.2026")
-    buchungsanzahl_und_wert("31.02.2026", "10.03.2026")
-    print("Test zimmerart_von:")
-    print(zimmerart_von(100))
-    print(zimmerart_von(400))
-    print(zimmerart_von(999))
-    print("Test meistgebuchte_zimmerart:")
-    meistgebuchte_zimmerart("01.10.2026", "31.10.2026") 
-    meistgebuchte_zimmerart("01.10.2026", "11.10.2026") 
-    meistgebuchte_zimmerart("01.11.2026", "30.11.2026") 
-    print("Test status_von_zimmer:")
-    print(status_von_zimmer(200, text_zu_datum("12.10.2026")))
-    print(status_von_zimmer(300, text_zu_datum("12.10.2026")))
-    print(status_von_zimmer(400, text_zu_datum("12.10.2026")))
-    print(status_von_zimmer(200, text_zu_datum("14.10.2026")))
-    print("Test zimmer_status_fuer_datum:")
-    zimmer_status_fuer_datum("12.10.2026")
-    zimmer_status_fuer_datum("14.10.2026")
-    zimmer_status_fuer_datum("31.02.2026")
 
 def hotel_statistiken():
     while True:
@@ -173,4 +147,5 @@ def hotel_statistiken():
 
 
 
-hotel_statistiken()
+if __name__ == "__main__":
+    hotel_statistiken()
