@@ -22,9 +22,43 @@ def zimmerart_von(zimmernummer):
         if zimmer["nummer"] == zimmernummer:
             return zimmer["art"]
     return None
+
+
+def status_von_zimmer(zimmernummer, datum):
+    for buchung in buchungen_liste:
+        if buchung["zimmer"] == zimmernummer:
+            check_in = text_zu_datum(buchung["check_in"])
+            check_out = text_zu_datum(buchung["check_out"])
+            if check_in <= datum < check_out:
+                if buchung["status"] == "eingecheckt":
+                    return "belegt"
+                if buchung["status"] == "reserviert":
+                    return "reserviert"
+    return "frei"
+  
    
 def zimmer_status_fuer_datum(datum):
-    pass
+    if not pruefe_zeitraum(datum, datum):
+        return
+    tag = text_zu_datum(datum)
+    frei = []
+    reserviert = []
+    belegt = []
+    for zimmer in zimmer_liste:
+        status = status_von_zimmer(zimmer["nummer"], tag)
+        if status == "frei":
+            frei.append(str(zimmer["nummer"]))
+        elif status == "reserviert":
+            reserviert.append(str(zimmer["nummer"]))
+        else:
+            belegt.append(str(zimmer["nummer"]))
+
+    print(f"Zimmerstatus am {datum}:")
+    print(f"Frei ({len(frei)}): {', '.join(frei) or 'keine'}")
+    print(f"Reserviert ({len(reserviert)}): {', '.join(reserviert) or 'keine'}")
+    print(f"Belegt ({len(belegt)}): {', '.join(belegt) or 'keine'}")
+
+
 def pruefe_zeitraum(von, bis):
     try:
         von_datum = text_zu_datum(von)
@@ -36,6 +70,8 @@ def pruefe_zeitraum(von, bis):
         print("Fehler: Das Bis-Datum liegt vor dem Von-Datum.")
         return False
     return True
+
+
 def buchungsanzahl_und_wert(von, bis):
     if not pruefe_zeitraum(von, bis):
         return
@@ -50,6 +86,7 @@ def buchungsanzahl_und_wert(von, bis):
             wert += buchung["gesamtpreis"]
     print(f"Anzahl aktiver Buchungen: {anzahl}")
     print(f"Buchungswert CHF: {wert:.2f}")
+
 
 def meistgebuchte_zimmerart(von, bis):
     if not pruefe_zeitraum(von, bis):
@@ -100,6 +137,14 @@ def hotel_statistiken():
     meistgebuchte_zimmerart("01.10.2026", "31.10.2026") 
     meistgebuchte_zimmerart("01.10.2026", "11.10.2026") 
     meistgebuchte_zimmerart("01.11.2026", "30.11.2026") 
-
+    print("Test status_von_zimmer:")
+    print(status_von_zimmer(200, text_zu_datum("12.10.2026")))
+    print(status_von_zimmer(300, text_zu_datum("12.10.2026")))
+    print(status_von_zimmer(400, text_zu_datum("12.10.2026")))
+    print(status_von_zimmer(200, text_zu_datum("14.10.2026")))
+    print("Test zimmer_status_fuer_datum:")
+    zimmer_status_fuer_datum("12.10.2026")
+    zimmer_status_fuer_datum("14.10.2026")
+    zimmer_status_fuer_datum("31.02.2026")
     
 hotel_statistiken()
