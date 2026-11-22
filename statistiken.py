@@ -113,7 +113,7 @@ def meistgebuchte_zimmerart(von, bis):
     print(f"Meistgebuchte Zimmerart: {', '.join(meistgebuchte)} (Anzahl Buchungen: {hoechste_anzahl})")
 
             
-def hotel_statistiken():
+def tests_ausfuehren():
     print("=== Hotelstatistiken ===")
     print("Test ganzer Oktober:")
     buchungsanzahl_und_wert("01.10.2026", "31.10.2026")
@@ -146,5 +146,31 @@ def hotel_statistiken():
     zimmer_status_fuer_datum("12.10.2026")
     zimmer_status_fuer_datum("14.10.2026")
     zimmer_status_fuer_datum("31.02.2026")
-    
+
+def hotel_statistiken():
+    while True:
+        print("\n=== Hotelstatistiken ===")
+        print("1. Zimmerstatus an einem Datum")
+        print("2. Anzahl Buchungen und Buchungswert im Zeitraum")
+        print("3. Meistgebuchte Zimmerart in Zeitraum")
+        print("0. Zurück")
+        wahl = input("Auswahl: ")
+        if wahl == "1":
+            datum = input("Datum (TT.MM.JJJJ): ")
+            zimmer_status_fuer_datum(datum)
+        elif wahl == "2":
+            von = input("Von (TT.MM.JJJJ): ")
+            bis = input("Bis (TT.MM.JJJJ): ")
+            buchungsanzahl_und_wert(von, bis)
+        elif wahl == "3":
+            von = input("Von (TT.MM.JJJJ): ")
+            bis = input("Bis (TT.MM.JJJJ): ")
+            meistgebuchte_zimmerart(von, bis)
+        elif wahl == "0":
+            break
+        else:
+            print("Ungültige Auswahl. Bitte 0, 1, 2 oder 3 wählen.")
+
+
+
 hotel_statistiken()
